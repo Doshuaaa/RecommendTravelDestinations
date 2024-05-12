@@ -23,8 +23,6 @@ public class RectangleBase extends AtomBase{
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         super.dispatchDraw(canvas);
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        canvas.drawRect(rect.left, rect.top , rect.right, rect.bottom, paint);
+        canvas.drawColor(rect.color);
     }
 }

@@ -10,14 +10,13 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public abstract class AtomBase extends FrameLayout {
+public class AtomBase extends FrameLayout{
 
 
     private int lastX;
     private int lastY;
     AtomCore atom;
 
-    int color = Color.BLACK;
 
     Paint paint;
 
@@ -42,6 +41,13 @@ public abstract class AtomBase extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+
+        int x = atom.left;
+        int y = atom.top;
+
+        if ((left != x || top != y) && getWidth() > 0) {
+            layout(x, y, x + getWidth(), y + getHeight());
+        }
 //        for(int i = 0; i < getChildCount(); i++) {
 //
 //            AtomBase child = (AtomBase) getChildAt(i);
@@ -54,7 +60,7 @@ public abstract class AtomBase extends FrameLayout {
 
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
-        switch ( action ) {
+        switch (action) {
             case MotionEvent.ACTION_DOWN:
                 lastX = (int) event.getRawX();
                 lastY = (int) event.getRawY();
@@ -68,31 +74,18 @@ public abstract class AtomBase extends FrameLayout {
                 int newX = getLeft() + deltaX;
                 int newY = getTop() + deltaY;
 
-                layout(newX, newY, newX +getWidth(), newY + getHeight());
-                atom.centerX = newX +getWidth() / 2;
-                atom.centerY = newY + getHeight() / 2;
+                atom.left = newX;
+                atom.top = newY;
                 lastX = (int) event.getRawX();
                 lastY = (int) event.getRawY();
+                layout(newX, newY, newX +getWidth(), newY + getHeight());
                 break;
         }
 
         return true;
     }
 
-    public void setColor(int color) {
-
-        this.color = color;
-        invalidate();
-    }
-
     public void showAdorner() {
-//        paint.setColor(Color.YELLOW);
-//        paint.setStrokeWidth(60);
-//        invalidate();
-    }
-
-    public void hideAdorner() {
 
     }
-
 }

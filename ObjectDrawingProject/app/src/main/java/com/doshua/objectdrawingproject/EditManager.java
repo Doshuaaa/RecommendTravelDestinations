@@ -1,6 +1,7 @@
 package com.doshua.objectdrawingproject;
 
 import android.content.Context;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 public class EditManager {
@@ -14,7 +15,7 @@ public class EditManager {
         this.context = context;
     }
 
-    public void createObject(String type) {
+    public AtomCore createObject(String type) {
 
 
         switch(type) {
@@ -23,14 +24,15 @@ public class EditManager {
                 Circle circle = new Circle(50, 50, 200, 200);
                 CircleBase circleBase = new CircleBase(context, circle);
                 layout.addView(circleBase);
-                break;
+                return circle;
 
             case "사각형":
                 Rectangle rect = new Rectangle(0,0, 200, 200);
                 RectangleBase rectBase = new RectangleBase(context, rect);
-
                 layout.addView(rectBase);
+                return rect;
         }
+        return null;
     }
 
     public void removeObject() {
@@ -41,8 +43,32 @@ public class EditManager {
 
     public void changeColor(int color) {
 
-        focusAtom.setColor(color);
+        focusAtom.atom.setColor(color);
+        focusAtom.invalidate();
 
     }
+
+    public void pasteAtom(float x, float y) {
+
+        AtomCore atom = focusAtom.atom.clone();
+        atom.left = (int) x;
+        atom.top = (int) y;
+        if(atom instanceof Circle) {
+            CircleBase circleBase = new CircleBase(context, (Circle) atom);
+            layout.addView(circleBase);
+        }
+
+        else if(atom instanceof Rectangle) {
+            RectangleBase rectBase = new RectangleBase(context, (Rectangle) atom);
+            layout.addView(rectBase);
+        }
+    }
+
+    public void removeAll() {
+
+        layout.removeAllViews();
+    }
+
+   // public void
 
 }

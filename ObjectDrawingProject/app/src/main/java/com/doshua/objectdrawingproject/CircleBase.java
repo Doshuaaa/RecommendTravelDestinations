@@ -17,7 +17,7 @@ public class CircleBase extends AtomBase {
     Circle circle;
 
     public CircleBase(@NonNull Context context, Circle circle) {
-        super(context, (AtomCore) circle);
+        super(context, circle);
         this.circle = circle;
     }
 
@@ -36,17 +36,14 @@ public class CircleBase extends AtomBase {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setX(circle.left);
-        setY(circle.top);
-       setMeasuredDimension(circle.sizeX, circle.sizeY);
+
+        setMeasuredDimension(circle.sizeX, circle.sizeY);
     }
 
     @Override
     protected void dispatchDraw(@NonNull Canvas canvas) {
         super.dispatchDraw(canvas);
-        canvas.drawColor(Color.BLACK);;
-        paint.setColor(color);
-        canvas.drawOval(circle.left, circle.top, circle.right, circle.bottom, paint);
-       //canvas.drawCircle((float) circle.centerX / 2, (float)circle.centerY / 2, (float) circle.radius, paint);
+        paint.setColor(circle.color);
+        canvas.drawOval(0, 0, circle.sizeX, circle.sizeY, paint);
     }
 }

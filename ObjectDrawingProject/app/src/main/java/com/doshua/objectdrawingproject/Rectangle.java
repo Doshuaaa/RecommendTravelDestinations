@@ -11,6 +11,6 @@ public class Rectangle extends AtomCore{
 
     Rectangle(int left, int top, int right, int bottom) {
 
-        super(left, top, right, bottom);
+        super(left, top, right, bottom, "사각형");
     }
 }
